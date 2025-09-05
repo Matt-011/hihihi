@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta Mágica ✨</title>
+  <style>
+    body,html {
+      margin:0;
+      padding:0;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#111;
+      color:white;
+      font-family: 'Georgia', serif;
+      overflow:hidden;
+    }
+    #cortina {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:#000;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:2rem;
+      color:#fff;
+      cursor:pointer;
+      z-index:10;
+    }
+    #hogwarts, #cartaFinal, #papel {
+      display:none;
+      text-align:center;
+    }
+    #hogwarts img, #cartaFinal img {
+      max-width:40%;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(255,255,255,0.5);
+    }
+    #papel {
+      background:#f5f5dc;
+      color:#222;
+      width:60%;
+      max-width:600px;
+      padding:20px;
+      border:4px solid #b8860b;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(255,255,255,0.4);
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+    }
+    #papel h2 img {
+      width:60px;
+      vertical-align:middle;
+    }
+    #papel p {
+      margin-top:15px;
+      line-height:1.6;
+      font-size:1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cortina">Clique para abrir a surpresa ✨</div>
+
+  <div id="hogwarts">
+    <h2>Sua Carta de Hogwarts 🧙‍♂️</h2>
+    <img src="" alt="Carta Hogwarts">
+    <p>Clique novamente para ver a próxima carta...</p>
+  </div>
+
+  <div id="cartaFinal">
+    <h2>💌 Uma carta só para você 💌</h2>
+    <img src="../images/91xUPrV8APL._AC_SL1500.png" alt="Carta Amor">
+    <p>Clique novamente para abrir...</p>
+  </div>
+
+  <div id="papel">
+    <h2><img src="../images/Hogwarts-Logo.png"> Carta de Hogwarts</h2>
+    <p>
+      Temos o prazer de informar que você, Caroline Rocha Rodrigues, foi aceita na Escola de Magia e Bruxaria de Hogwarts.  
+      As aulas começam em breve e estamos ansiosos pela sua chegada aos corredores mágicos do castelo. <br> 
+      Além de ser aceita, desde o dia 03/05 você se tornou o amor da minha vida, e você trouxe momentos magicos para mim, eu te amo do fundo do meu coração, e quero você perto de mim para minha vida inteira.
+       Eu te amo MUITO MUITO MUITO MUITO MUITO MUITO MUITO MUITO MUITO MUITO MUITO, AMO CADA DETALHE SEU, amo você, e SOMENTE VOCÊ.
+      <br><br>
+      Atenciosamente,  
+      <strong>Mateus de Souza Rocha</strong>
+    </p>
+  </div>
+
+  <script>
+    let etapa=0;
+    document.getElementById("cortina").onclick = function(){
+      this.style.display="none";
+      document.getElementById("hogwarts").style.display="block";
+      etapa=1;
+    };
+
+    document.body.onclick=function(){
+      if(etapa===1){
+        document.getElementById("hogwarts").style.display="none";
+        document.getElementById("cartaFinal").style.display="block";
+        etapa=2;
+      } else if(etapa===2){
+        document.getElementById("cartaFinal").style.display="none";
+        document.getElementById("papel").style.display="block";
+        etapa=3;
+      }
+    }
+  </script>
+
+</body>
+</html>

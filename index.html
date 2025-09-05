@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz do Amor 💘</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .question { display: none; }
+    .question.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    iframe { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Música de fundo -->
+  <iframe id="player" width="0" height="0"
+    src="https://www.youtube.com/watch?v=fANtA8K3ugM"
+    frameborder="0" allow="autoplay"></iframe>
+
+  <!-- Introdução -->
+  <div id="intro" class="card">
+    <h1>💘 Bem-vinda ao Quiz 💘</h1>
+    <p class="mt-3">Teste seus conhecimentos nhee.<br>
+       Vamos ver se você lembra dos nossos momentos mais lindos?</p>
+    <button class="btn btn-danger mt-4" onclick="startQuiz()">Começar Quiz</button>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz" class="card" style="display:none;">
+    <!-- 1 -->
+    <div class="question active" data-answer="03/05">
+      <h4>1 - Qual o nosso dia?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">07/05</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">05/02</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">03/08</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">03/05</button>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="question" data-answer="03/05">
+      <h4>2 - Primeiro beijinho?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">07/05</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">03/05</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">12/05</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">24/04</button>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="question" data-answer="Mateus de Souza Rocha">
+      <h4>3 - Meu Nome Completo?</h4>
+      <input type="text" class="form-control mt-3" id="q3input" placeholder="Digite aqui...">
+      <button class="btn btn-outline-success mt-3" onclick="checkTextAnswer()">Confirmar</button>
+    </div>
+    <!-- 4 -->
+    <div class="question" data-answer="Santos">
+      <h4>4 - Meu time do Coração, e o seu tbm.</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Santos</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Palmeiras</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Sao paulo</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Flamengo</button>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="question" data-answer="Você nn tem ideia o quanto ele te ama, ele te ama mais que qulquer coisa no mundo inteiro. Você é a neném, princesa e a bebê dele!!">
+      <h4>5 - Você acha que o Mateus te ama?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Você nn tem ideia o quanto ele te ama, ele te ama mais que qulquer coisa no mundo inteiro. Você é a neném, princesa e a bebê dele!!</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function startQuiz() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("quiz").style.display = "block";
+    }
+
+    function checkAnswer(button) {
+      let current = document.querySelector(".question.active");
+      let correct = current.getAttribute("data-answer");
+
+      // Caso especial Palmeiras
+      if (button.innerText.trim() === "Palmeiras") {
+        alert("Esse time não pode hehe");
+        return;
+      }
+
+      if (button.innerText.trim().toLowerCase() === correct.trim().toLowerCase()) {
+        nextQuestion(current);
+      } else {
+        alert("OPS ❌");
+      }
+    }
+
+    function checkTextAnswer() {
+      let current = document.querySelector(".question.active");
+      let correct = current.getAttribute("data-answer");
+      let user = document.getElementById("q3input").value;
+
+      if (user.trim().toLowerCase() === correct.trim().toLowerCase()) {
+        nextQuestion(current);
+      } else {
+        alert("OPS ❌");
+      }
+    }
+
+    function nextQuestion(current) {
+      current.classList.remove("active");
+      let next = current.nextElementSibling;
+      if (next && next.classList.contains("question")) {
+        next.classList.add("active");
+      } else {
+        // acabou o quiz
+        window.location.href = "pages/fotos.html";
+      }
+    }
+  </script>
+</body>
+</html>

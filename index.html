@@ -88,53 +88,136 @@
         <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Você nn tem ideia o quanto ele te ama, ele te ama mais que qulquer coisa no mundo inteiro. Você é a neném, princesa e a bebê dele!!</button>
       </div>
     </div>
+    <!-- 6 -->
+    <div class="question" data-answer="INFINITOS">
+      <h4>6 - Quantos abraços o Mateus te daria por dia?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">2</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">5</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">100</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">88888</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">44</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">INFINITOS</button>
+      </div>
+    </div>
+    <!-- 7 -->
+    <div class="question" data-answer="INFINITOS">
+      <h4>7 - Quantos beijinhos o Mateus te daria por dia?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">256</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">333335</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">10670</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">7</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">8844</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">44</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">INFINITOS</button>
+      </div>
+    </div>
+    <!-- 8 -->
+    <div class="question" data-answer="Yung Lixo">
+      <h4>8 - Artista favorito do Mateus?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Kanye</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Kendrick</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Yung Lixo</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Eminem</button>
+      </div>
+    </div>
+    <!-- 9 -->
+    <div class="question" data-answer="A VIDA INTEIRA">
+      <h4>9 - Quanto tempo o Mateus passaria com vc?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">1 dia</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">40 dias</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">6 meses</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">A VIDA INTEIRA</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    function startQuiz() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("quiz").style.display = "block";
+  function startQuiz() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+  }
+
+  function checkAnswer(button) {
+    let current = document.querySelector(".question.active");
+    let correct = current.getAttribute("data-answer");
+
+    // Caso especial Palmeiras
+    if (button.innerText.trim() === "Palmeiras") {
+      alert("Esse time não pode hehe");
+      return;
     }
 
-    function checkAnswer(button) {
-      let current = document.querySelector(".question.active");
-      let correct = current.getAttribute("data-answer");
-
-      // Caso especial Palmeiras
-      if (button.innerText.trim() === "Palmeiras") {
-        alert("Esse time não pode hehe");
+    if (button.innerText.trim().toLowerCase() === correct.trim().toLowerCase()) {
+      // Se é a questão 8 (Artista favorito), salva destino e vai pra música
+      if (current.querySelector("h4").innerText.includes("Artista favorito")) {
+        localStorage.setItem("gotoQuestion", "9"); // fallback
+        window.location.href = "pages/Musica.html";
         return;
       }
+      nextQuestion(current);
+    } else {
+      alert("OPS ❌");
+    }
+  }
 
-      if (button.innerText.trim().toLowerCase() === correct.trim().toLowerCase()) {
-        nextQuestion(current);
-      } else {
-        alert("OPS ❌");
-      }
+  function checkTextAnswer() {
+    let current = document.querySelector(".question.active");
+    let correct = current.getAttribute("data-answer");
+    let user = document.getElementById("q3input").value;
+
+    if (user.trim().toLowerCase() === correct.trim().toLowerCase()) {
+      nextQuestion(current);
+    } else {
+      alert("OPS ❌");
+    }
+  }
+
+  function nextQuestion(current) {
+    current.classList.remove("active");
+    let next = current.nextElementSibling;
+    if (next && next.classList.contains("question")) {
+      next.classList.add("active");
+    } else {
+      // acabou o quiz
+      window.location.href = "pages/fotos.html";
+    }
+  }
+
+  // --- NOVO: ativar uma questão específica (1-based) ---
+  function activateQuestion(n) {
+    const intro = document.getElementById("intro");
+    const quiz = document.getElementById("quiz");
+    intro.style.display = "none";
+    quiz.style.display = "block";
+
+    const questions = quiz.querySelectorAll(".question");
+    questions.forEach(q => q.classList.remove("active"));
+    const target = questions[n - 1]; // 1 -> primeira, 9 -> nona
+    if (target) target.classList.add("active");
+  }
+
+  // --- NOVO: ao carregar a página, checar hash (#q9) ou localStorage ---
+  document.addEventListener("DOMContentLoaded", () => {
+    let n = null;
+
+    if (location.hash && /^#q\d+$/.test(location.hash)) {
+      n = parseInt(location.hash.replace("#q", ""), 10);
+    } else {
+      const stored = localStorage.getItem("gotoQuestion");
+      if (stored) n = parseInt(stored, 10);
     }
 
-    function checkTextAnswer() {
-      let current = document.querySelector(".question.active");
-      let correct = current.getAttribute("data-answer");
-      let user = document.getElementById("q3input").value;
-
-      if (user.trim().toLowerCase() === correct.trim().toLowerCase()) {
-        nextQuestion(current);
-      } else {
-        alert("OPS ❌");
-      }
+    if (n) {
+      activateQuestion(n);
+      localStorage.removeItem("gotoQuestion");
+      // limpa o hash da barra de endereço (opcional)
+      history.replaceState(null, "", location.pathname);
     }
-
-    function nextQuestion(current) {
-      current.classList.remove("active");
-      let next = current.nextElementSibling;
-      if (next && next.classList.contains("question")) {
-        next.classList.add("active");
-      } else {
-        // acabou o quiz
-        window.location.href = "pages/fotos.html";
-      }
-    }
-  </script>
+  });
+</script>
 </body>
 </html>

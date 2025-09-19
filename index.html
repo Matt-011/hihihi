@@ -133,6 +133,46 @@
         <button class="btn btn-outline-dark" onclick="checkAnswer(this)">A VIDA INTEIRA</button>
       </div>
     </div>
+    <!-- 10 -->
+    <div class="question" data-answer="">
+      <h4>10 - Escolha uma dessas músicas:</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="goToMusic('Musica1.html')">Música 1</button>
+        <button class="btn btn-outline-dark" onclick="goToMusic('Musica2.html')">Música 2</button>
+        <button class="btn btn-outline-dark" onclick="goToMusic('Musica3.html')">Música 3</button>
+        <button class="btn btn-outline-dark" onclick="goToMusic('Musica4.html')">Música 4</button>
+      </div>
+    </div>
+    <!-- 11 -->
+    <div class="question" data-answer="Theodore">
+      <h4>11 - Personagem que o Mateus mais se parece:</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Alvin</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Ash</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Theodore</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Homem Aranha</button>
+      </div>
+    </div>
+    <!-- 12 -->
+    <div class="question" data-answer="O tempo todo">
+      <h4>12 - Quando você sente mais saudade de mim?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Antes de dormir</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Quando acordo</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Durante o dia</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">O tempo todo</button>
+      </div>
+    </div>
+    <!-- 13 -->
+    <div class="question" data-answer="Lanche e Macarrão">
+      <h4>13 - Minha comida favorita é?</h4>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Pizza e Lanche</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Lanche e Macarrão</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Sushi e Suco</button>
+        <button class="btn btn-outline-dark" onclick="checkAnswer(this)">Churrasco e Pizza</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -187,7 +227,13 @@
     }
   }
 
-  // --- NOVO: ativar uma questão específica (1-based) ---
+  // ir para página de música
+  function goToMusic(page) {
+    localStorage.setItem("gotoQuestion", "11");
+    window.location.href = "pages/" + page;
+  }
+
+  // ativar uma questão específica (1-based)
   function activateQuestion(n) {
     const intro = document.getElementById("intro");
     const quiz = document.getElementById("quiz");
@@ -196,11 +242,11 @@
 
     const questions = quiz.querySelectorAll(".question");
     questions.forEach(q => q.classList.remove("active"));
-    const target = questions[n - 1]; // 1 -> primeira, 9 -> nona
+    const target = questions[n - 1];
     if (target) target.classList.add("active");
   }
 
-  // --- NOVO: ao carregar a página, checar hash (#q9) ou localStorage ---
+  // ao carregar a página, checar hash (#q9) ou localStorage
   document.addEventListener("DOMContentLoaded", () => {
     let n = null;
 
@@ -214,10 +260,9 @@
     if (n) {
       activateQuestion(n);
       localStorage.removeItem("gotoQuestion");
-      // limpa o hash da barra de endereço (opcional)
       history.replaceState(null, "", location.pathname);
     }
   });
-</script>
+  </script>
 </body>
 </html>
